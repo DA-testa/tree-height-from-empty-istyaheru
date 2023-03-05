@@ -35,7 +35,7 @@ def element_steps(element, parents, steps_arr):
 
 def main():
     # implement input form keyboard and from files
-    choice = input()
+    choice = input().strip().upper()
 
     if choice.__contains__('F'):
         test = input()
@@ -48,15 +48,13 @@ def main():
                 amount = int(file.readline())
                 tree_str = list(map(int, file.readline().split(" ")))
                 tree = numpy.array(tree_str)
-                print(tree)
                 print(compute_height(amount, tree))
                 
             file.close()
     elif choice.__contains__('I'):
         amount = int(input())
-        tree_str = input().split(" ")
+        tree_str = list(map(int, input().split(" ")))
         tree = numpy.array(tree_str)
-        print(tree)
         print(compute_height(amount, tree))
     else:
         print("Please enter I or F!")
