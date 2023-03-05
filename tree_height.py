@@ -4,6 +4,7 @@
 import sys
 import threading
 import numpy
+import os
 
 
 def compute_height(n, parents):
@@ -42,7 +43,8 @@ def main():
         if test.__contains__('a'):
             return
         else:
-            with open("test/" + test) as file:
+            gh_bypass = os.path.join(os.getcwd(), 'test', test)
+            with open(gh_bypass) as file:
                 amount = int(file.readline())
                 tree_str = list(map(int, file.readline().split(" ")))
                 tree = numpy.array(tree_str)
