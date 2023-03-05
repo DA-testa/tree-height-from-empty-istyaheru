@@ -10,38 +10,26 @@ def compute_height(n, parents):
     # Write this function
     max_height = 0
     # Your code here
-    visited = numpy.zeros((int(n)))
-    steps_arr = numpy.zeros((int(n)))
-    next = 0
-    steps = 1
+    steps_arr = numpy.zeros([n])
 
-    for i in range(n-1):
-
-        if parents[next] == -1:
-            visited[i-1] = True
-            steps_arr[i-1] = steps
-            next = int(i)
-            steps = 1
-        elif visited[next] == True:
-            visited[i-1] = True
-            steps_arr[i-1] = steps_arr[next] + 1
-            next = int(i)
+    for element in range(int(n)):
+        
+        if parents[element] == -1:
             steps = 1
         else:
-            visited[next] = True
-            steps_arr[next] = int(steps)
-            steps = steps + 1
-            next = int(parents[next])
-        
-    for j in range(n-1):
+            steps = int(element_steps(element, parents, steps_arr) + 1)
 
-        if max_height < int(steps_arr[int(j)]):
-            max_height = int(steps_arr[int(j)])
-
-    print(steps_arr[:])
-    print(visited[:])
+        if max_height < steps:
+            max_height = steps
 
     return max_height
+
+def element_steps(element, parents, steps_arr):
+
+    if parents[element] != -1:
+        steps_arr[element] = element_steps(parents[element], parents, steps_arr) + 1
+
+    return steps_arr[element]
 
 
 def main():
@@ -50,15 +38,17 @@ def main():
 
     if choice.__contains__('F'):
         test = input()
+        
         if test.__contains__('a'):
             return
         else:
             with open("test/" + test) as file:
                 amount = int(file.readline())
-                tree_str = file.readline().replace("\n", "").split(" ")
+                tree_str = list(map(int, file.readline().split(" ")))
                 tree = numpy.array(tree_str)
                 print(tree)
                 print(compute_height(amount, tree))
+                
             file.close()
     elif choice.__contains__('I'):
         amount = int(input())
@@ -82,6 +72,6 @@ def main():
 # of bigger stack, we have to launch the computation in a new thread.
 sys.setrecursionlimit(10**7)  # max depth of recursion
 threading.stack_size(2**27)   # new thread will get stack of such size
-#threading.Thread(target=main).start()
+threading.Thread(target=main).start()
 main()
 # print(numpy.array([1,2,3]))
