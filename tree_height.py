@@ -47,15 +47,13 @@ def main():
             with open(gh_bypass) as file:
                 amount = int(file.readline())
                 tree_str = list(map(int, file.readline().split(" ")))
-                tree = numpy.array(tree_str)
-                print(compute_height(amount, tree))
+                print(compute_height(amount, tree_str))
                 
             file.close()
     elif choice.__contains__('I'):
         amount = int(input())
         tree_str = list(map(int, input().split(" ")))
-        tree = numpy.array(tree_str)
-        print(compute_height(amount, tree))
+        print(compute_height(amount, tree_str))
     else:
         print("Please enter I or F!")
         return
